@@ -98,6 +98,7 @@ if uploaded_file is not None:
      
      df = process_data(df)
      max_stage = df['00065'].max()
+     min_stage = df['00065'].min()
      max_gradient = df.gradient.max()
      min_gradient = df.gradient.min()
      jamcans = get_candidates(df)
@@ -109,8 +110,8 @@ if choice is not None:
     start_date = (pd.to_datetime(choice)-pd.tseries.offsets.Day(2)).strftime('%Y%m%d')
     end_date = (pd.to_datetime(choice)+pd.tseries.offsets.Day(2)).strftime('%Y%m%d')
     df2 = df.loc[start_date : end_date]
-    fig =px.line(df2, x = df2.index, y = '00065',title=f'{site_info.station_nm[0]}')
-    fig.update_yaxes(range=[0, max_stage])
+    fig = px.line(df2, x = df2.index, y = '00065',title=f'{site_info.station_nm[0]}')
+    fig.update_yaxes(range=[min_stage, max_stage])
     st.write(fig)
     #st.plotly_chart(px.line(df2, x = df2.index, y = '00065'))
     fig2 =px.line(df2, x = df2.index, y = 'gradient')
