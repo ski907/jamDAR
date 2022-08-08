@@ -31,7 +31,7 @@ def download_iv_data(site,years):
     dfs = []
     
     for year in years:
-        dfs.append(nwis.get_record(sites=site, service='iv', start=f'{year-1}-12-01', end=f'{year}-05-01',parameterCd='00065'))
+        dfs.append(nwis.get_record(sites=site, service='iv', start=f'{year-1}-12-01', end=f'{year}-07-01',parameterCd='00065'))
         #print(f'{year} complete')
         st.write(f'{year} complete')
     df = pd.concat(dfs)
@@ -54,7 +54,7 @@ if submit:
         st.download_button(
         "Press to Download",
         csv,
-        f'{site}_DEC-APR_{year1}-{year2}.csv',
+        f'{site}_DEC-JUN_{year1}-{year2}.csv',
         "text/csv",
         key='download-csv'
     )
