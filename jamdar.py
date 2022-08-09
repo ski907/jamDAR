@@ -38,15 +38,13 @@ def download_iv_data(site,years):
     csv = df.to_csv().encode('utf-8')
     return csv
     
-@st.cache
+
 def get_site_info(site):
     site_info = nwis.get_record(sites=site, service='site')
     return site_info
 
 site_info = get_site_info(site)
 st.write('current site: ',site_info.station_nm[0])
-
-
 
 if submit:
     try:
@@ -94,7 +92,11 @@ uploaded_file = st.file_uploader("Choose a file")
 if uploaded_file is not None:
      df = pd.read_csv(uploaded_file)
      df.index = df.datetime
-     
+     site = str(df.site_no[0])
+     while len(site) < 8:
+        site = '0'+site
+     st.write(site)
+     site_info = get_site_info(site)
      
      df = process_data(df)
      max_stage = df['00065'].max()
